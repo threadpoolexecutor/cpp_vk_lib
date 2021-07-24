@@ -5,3 +5,4 @@ CMakeFiles
 Makefile
 config.json
 .cmake/
+winbuild/

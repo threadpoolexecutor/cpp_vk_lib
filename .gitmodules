@@ -4,9 +4,3 @@
 [submodule "dependencies/spdlog"]
 	path = dependencies/spdlog
 	url = https://github.com/gabime/spdlog.git
-[submodule "dependencies/googletest"]
-	path = dependencies/googletest
-	url = https://github.com/google/googletest.git
-[submodule "dependencies/curlpp"]
-	path = dependencies/curlpp
-	url = https://github.com/jpbarrette/curlpp.git

@@ -23,7 +23,9 @@ else()
   set(extra_warnings_flags "")
 endif()
 
-set(CMAKE_CXX_FLAGS "${common_flags} ${extra_warnings_flags} ${find_leaks_flags} -O2 -msse3 -march=native -mtune=generic -flto")
+IF (NOT WIN32)
+  set(CMAKE_CXX_FLAGS "${common_flags} ${extra_warnings_flags} ${find_leaks_flags} -O2 -msse3 -march=native -mtune=generic -flto")
+endif()
 
 add_library(lib-simdjson INTERFACE)
 target_compile_features(lib-simdjson INTERFACE cxx_std_17)
@@ -34,4 +36,12 @@ install(TARGETS lib-simdjson EXPORT simdjson-config INCLUDES DESTINATION depende
 
 file(GLOB_RECURSE SRC "*.hpp" "*.cpp")
 add_library(cpp_vk_lib SHARED ${SRC})
-target_link_libraries(cpp_vk_lib simdjson)
+
+IF(WIN32)
+  find_package(CURL CONFIG REQUIRED) #vcpkg moment)
+  find_package(unofficial-curlpp CONFIG REQUIRED)
+
+  target_link_libraries(cpp_vk_lib PRIVATE simdjson CURL::libcurl unofficial::curlpp::curlpp)
+ELSE()
+  target_link_libraries(cpp_vk_lib simdjson)
+ENDIF()

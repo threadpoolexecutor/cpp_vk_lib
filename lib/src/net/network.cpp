@@ -84,6 +84,10 @@ std::string vk::network::request_data(std::string_view host, std::string_view da
     return response.str();
 }
 
+#ifdef _WIN32
+#define not !
+#endif
+
 size_t vk::network::download(std::string_view filename, std::string_view server)
 {
     FILE* fp = fopen(filename.data(), "w");
