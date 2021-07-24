@@ -40,7 +40,7 @@ IF (NOT WIN32)
   install(TARGETS lib-simdjson EXPORT simdjson-config INCLUDES DESTINATION dependencies)
 endif()
 
-#set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS YES CACHE BOOL "Export all symbols")
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS YES CACHE BOOL "Export all symbols")
 
 file(GLOB_RECURSE SRC "*.hpp" "*.cpp")
 IF (NOT WIN32)
@@ -50,7 +50,7 @@ ELSE()
 ENDIF()
 
 IF(WIN32)
-  target_link_libraries(cpp_vk_lib PRIVATE spdlog::spdlog_header_only CURL::libcurl unofficial::curlpp::curlpp simdjson::simdjson)
+  target_link_libraries(cpp_vk_lib PRIVATE spdlog::spdlog_header_only CURL::libcurl unofficial::curlpp::curlpp simdjson::simdjson simdjson::simdjson-flags simdjson::simdjson-headers)
 ELSE()
   target_link_libraries(cpp_vk_lib simdjson)
 ENDIF()
