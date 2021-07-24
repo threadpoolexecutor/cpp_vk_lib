@@ -4,7 +4,11 @@
 
 TEST(config, field_access)
 {
-    vk::config::load("json_schema/sample_config.json");
+    #ifndef  _WIN32
+        vk::config::load("json_schema/sample_config.json");
+    #else
+        vk::config::load("../../../../json_schema/sample_config.json");
+    #endif
 
     ASSERT_EQ(vk::config::access_token(), "access_token");
     ASSERT_EQ(vk::config::user_token(), "user_token");
@@ -17,6 +21,7 @@ TEST(config, field_access)
     ASSERT_EQ(vk::config::password(), "password");
 
     ASSERT_EQ(vk::config::num_workers(), 8);
+    
     ASSERT_EQ(vk::config::error_logpath(), "/tmp/errors.log");
     ASSERT_EQ(vk::config::event_logpath(), "/tmp/events.log");
 }

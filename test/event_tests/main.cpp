@@ -1,17 +1,22 @@
-#include "cpp_vk_lib/events/message_new.hpp"
-#include "cpp_vk_lib/events/wall_post_new.hpp"
-#include "cpp_vk_lib/events/wall_reply_new.hpp"
-
+#include "../../lib/include/cpp_vk_lib/events/message_new.hpp"
+#include "../../lib/include/cpp_vk_lib/events/wall_post_new.hpp"
+#include "../../lib/include/cpp_vk_lib/events/wall_reply_new.hpp"
 #include "cpp_vk_lib/events/common_event.hpp"
-
 #include "simdjson.h"
 
 #include <gtest/gtest.h>
 
+#ifdef _WIN32
+#define IF_WIN(a, b) a
+#else
+#define IF_WIN(a, b) b
+#endif
+
+//TODO: FIX WINDOWS BUILD
 TEST(message_new, default_event)
 {
     simdjson::dom::parser parser;
-    simdjson::dom::element event_object = parser.load("json_schema/message_new.json");
+    simdjson::dom::element event_object = parser.load(IF_WIN("../../../../json_schema/message_new.json", "json_schema/message_new.json"));
     vk::event::message_new event(std::move(event_object));
     ASSERT_EQ("123", event.text());
     ASSERT_EQ(499047616, event.from_id());
@@ -25,7 +30,7 @@ TEST(message_new, default_event)
 TEST(message_new, event_attachments)
 {
     simdjson::dom::parser parser;
-    simdjson::dom::element event_object = parser.load("json_schema/message_new.json");
+    simdjson::dom::element event_object = parser.load(IF_WIN("../../../../json_schema/message_new.json", "json_schema/message_new.json"));
     vk::event::message_new event(std::move(event_object));
     auto photo_attachment = event.attachments()[0];
     ASSERT_EQ(1, event.attachments().size());
@@ -36,7 +41,7 @@ TEST(message_new, event_attachments)
 TEST(wall_post_new, default_event)
 {
     simdjson::dom::parser parser;
-    simdjson::dom::element event_object = parser.load("json_schema/wall_post_new.json");
+    simdjson::dom::element event_object = parser.load(IF_WIN("../../../../json_schema/wall_post_new.json", "json_schema/wall_post_new.json"));
     vk::event::wall_post_new event(std::move(event_object));
     ASSERT_EQ(309, event.id());
     ASSERT_EQ(-192764727, event.from_id());
@@ -52,7 +57,7 @@ TEST(wall_post_new, default_event)
 TEST(wall_reply_new, default_event)
 {
     simdjson::dom::parser parser;
-    simdjson::dom::element event_object = parser.load("json_schema/wall_reply_new.json");
+    simdjson::dom::element event_object = parser.load(IF_WIN("../../../../json_schema/wall_reply_new.json", "json_schema/wall_reply_new.json"));
     vk::event::wall_reply_new event(std::move(event_object));
     ASSERT_EQ(312, event.id());
     ASSERT_EQ(499047616, event.from_id());

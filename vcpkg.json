@@ -1,0 +1,11 @@
+{
+  "name" : "cpp-vk-lib",
+  "version-string": "1",
+  "dependencies": [
+    "curl",
+    "curlpp",
+    "gtest",
+    "simdjson",
+    "spdlog"
+  ]
+}

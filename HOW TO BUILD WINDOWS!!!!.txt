@@ -1,0 +1,4 @@
+python ./buildwin.py PATH_TO_VCPKG TARGET_TRIPLET(u can use x64-windows)
+
+
+build visual studio project from winbuild
