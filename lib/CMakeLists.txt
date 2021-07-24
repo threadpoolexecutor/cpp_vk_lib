@@ -27,6 +27,8 @@ endif()
 
 IF (NOT WIN32)
   set(CMAKE_CXX_FLAGS "${common_flags} ${extra_warnings_flags} ${find_leaks_flags} -O2 -msse3 -march=native -mtune=generic -flto")
+ELSE()
+  #set(CMAKE_CXX_FLAGS "-O2 -msse3 -march=native -mtune=generic -flto")
 endif()
 
 IF (NOT WIN32)
@@ -38,7 +40,7 @@ IF (NOT WIN32)
   install(TARGETS lib-simdjson EXPORT simdjson-config INCLUDES DESTINATION dependencies)
 endif()
 
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS YES CACHE BOOL "Export all symbols")
+#set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS YES CACHE BOOL "Export all symbols")
 
 file(GLOB_RECURSE SRC "*.hpp" "*.cpp")
 IF (NOT WIN32)
@@ -48,7 +50,7 @@ ELSE()
 ENDIF()
 
 IF(WIN32)
-  target_link_libraries(cpp_vk_lib PRIVATE spdlog::spdlog_header_only CURL::libcurl unofficial::curlpp::curlpp simdjson::simdjson simdjson::simdjson-flags simdjson::simdjson-headers)
+  target_link_libraries(cpp_vk_lib PRIVATE spdlog::spdlog_header_only CURL::libcurl unofficial::curlpp::curlpp simdjson::simdjson)
 ELSE()
   target_link_libraries(cpp_vk_lib simdjson)
 ENDIF()
